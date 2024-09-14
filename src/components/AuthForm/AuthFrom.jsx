@@ -1,8 +1,9 @@
-import { Box, Button, Input, VStack, Image, Flex,  Text } from '@chakra-ui/react'
+import { Box, VStack, Image, Flex,  Text } from '@chakra-ui/react'
 import React from 'react'
 import { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
+import GoogleAuth from './GoogleAuth';
 
 function AuthFrom() {
   const [isLogin, setIsLogin] = useState(true);
@@ -28,14 +29,7 @@ function AuthFrom() {
             </Text>
             <Box flex={2} h={"1px"} bg={"gray.400"} />
           </Flex>
-          <Flex
-            alignItems={"center"}
-            justifyContent={"center"}
-            cursor={"pointer"}
-          >
-            <Image src="/google.png" w={5} alt="Google logo" />
-            <Text mx="2" color={"blue.500"}></Text>
-          </Flex>
+          <GoogleAuth/>
         </VStack>
       </Box>
 
