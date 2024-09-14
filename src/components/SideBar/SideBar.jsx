@@ -11,7 +11,7 @@ import {
 } from "../../assests/constant";
 import {AiFillHome,} from "react-icons/ai"
 import {BiLogOut} from 'react-icons/bi'
-import useLogout from "../AuthForm/hooks/useLogout";
+import useLogout from "../../hooks/useLogout";
 
 
 function SideBar() {
