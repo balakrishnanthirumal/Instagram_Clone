@@ -118,7 +118,7 @@ function SideBar() {
           display={{ base: "block", md: "none" }}
         >
           <Flex
-            onClick={handleLogout}
+            onClick={ () => handleLogout()}
             alignItems={"center"}
             gap={4}
             _hover={{ bg: "whiteAlpha.400" }}

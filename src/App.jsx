@@ -14,8 +14,9 @@ function App() {
         <Routes>
           <Route path="/" element={authUser ? <HomePage /> : <Navigate to={"/auth"} />} />
           <Route path="auth/" element={!authUser ? <AuthPage /> : <Navigate to={"/"} />} />
-          <Route path="/:username" element={<ProfilePage />} />
+          <Route path='/:username' element={<ProfilePage />} />
         </Routes>
+
       </PafeLayout>
     </>
   );

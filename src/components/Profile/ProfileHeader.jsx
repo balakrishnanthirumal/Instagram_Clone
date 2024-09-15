@@ -1,8 +1,12 @@
 import { AvatarGroup, Flex, Avatar, VStack, Text, Button } from '@chakra-ui/react'
 import { base } from 'framer-motion/client'
 import React from 'react'
+import useUserProfileStore from '../../store/userProfileStore'
 
 const ProfileHeader = () => {
+
+  const {userProfile} = useUserProfileStore();
+
   return (
     <Flex
     gap={{base:4, sm: 10}}
@@ -16,8 +20,8 @@ const ProfileHeader = () => {
       mx={'auto'}
       >
         <Avatar
-          name = 'As a Programmer'
-          src='/profilepic.png'
+          
+          src={userProfile.profilePicURL}
         />
       </AvatarGroup>
 
@@ -37,7 +41,7 @@ const ProfileHeader = () => {
           <Text
           fontSize = {{base: 'sm', md:'lg'}}
           >
-            asaprogrammer_
+            {userProfile.username}
           </Text>
           <Flex
           gap={4}
@@ -65,7 +69,7 @@ const ProfileHeader = () => {
           fontWeight={'bold'}
           fontSize = {{base: 'sm', md:'lg'}}
           >
-            4{' '} 
+            {userProfile.posts.length}
           </Text>
           Posts
           </Text>
@@ -75,7 +79,7 @@ const ProfileHeader = () => {
           fontWeight={'bold'}
           mr={1}
           >
-            149
+            {userProfile.followers.length}
           </Text>
           Followers
           </Text>
@@ -85,7 +89,7 @@ const ProfileHeader = () => {
           fontWeight={'bold'}
           mr={1}
           >
-            175
+            {userProfile.following.length}
           </Text>
           Following
           </Text>
@@ -100,7 +104,7 @@ const ProfileHeader = () => {
             fontSize={'sm'}
             fontWeight={'bold'}
           >
-            As a Programmer
+            {userProfile.fullName}
           </Text>
         </Flex>
         <Flex
@@ -112,7 +116,7 @@ const ProfileHeader = () => {
             fontSize={'sm'}
             fontWeight={'bold'}
           >
-            Nice nice
+            {userProfile.bio}
           </Text>
         </Flex>
         

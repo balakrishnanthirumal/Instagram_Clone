@@ -14,7 +14,7 @@ const useLogout = () => {
 			localStorage.removeItem("user-info");
 			logout();
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			
 		}
 	};
 
