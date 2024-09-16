@@ -1,11 +1,16 @@
-import { AvatarGroup, Flex, Avatar, VStack, Text, Button } from '@chakra-ui/react'
-import { base } from 'framer-motion/client'
+import { AvatarGroup, Flex, Avatar, VStack, Text, Button, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import useUserProfileStore from '../../store/userProfileStore'
+import useAuthStore from '../../store/authStore'
+import EditProfile  from '../Profile/EditProfile'
 
 const ProfileHeader = () => {
 
   const {userProfile} = useUserProfileStore();
+  const authUser = useAuthStore(state =>state.user)
+  const visitingOwnProfile = authUser && authUser.username === userProfile.username
+  const visitingAnotherProfile  = authUser && authUser.username !== userProfile.username
+  const {isOpen, onOpen, onClose} = useDisclosure();
 
   return (
     <Flex
@@ -43,20 +48,40 @@ const ProfileHeader = () => {
           >
             {userProfile.username}
           </Text>
-          <Flex
+          {visitingOwnProfile && 
+           <Flex
+           gap={4}
+           alignItems={'center'}
+           justifyContent={'center'}
+           >
+             <Button bg={'white'} 
+             color={'black'} 
+             _hover={{bg:'whiteAlpha.900'}} 
+             size={{base: 'xs', md: 'sm'}}
+             onClick={onOpen}
+             >
+               
+               Edit Profile
+             </Button>
+           </Flex> 
+           }
+
+           {visitingAnotherProfile &&  <Flex
           gap={4}
           alignItems={'center'}
           justifyContent={'center'}
           >
-            <Button bg={'white'} 
-            color={'black'} 
-            _hover={{bg:'whiteAlpha.900'}} 
+            <Button bg={'blue.500'} 
+            color={'white'} 
+            _hover={{bg:'blue.600'}} 
             size={{base: 'xs', md: 'sm'}}
             >
               
-              Edit Profile
+              Follow
             </Button>
           </Flex>
+          }
+         
         </Flex>
         <Flex
         alignItems={'center'}
@@ -121,6 +146,8 @@ const ProfileHeader = () => {
         </Flex>
         
       </VStack>
+
+      {isOpen && <EditProfile  isOpen = {isOpen} onClose={onClose}/>}
     </Flex>
   )
 }
