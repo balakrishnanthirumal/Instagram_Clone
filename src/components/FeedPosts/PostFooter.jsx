@@ -13,10 +13,14 @@ import {
   NotificationsLogo,
   UnlikeLogo,
 } from "../../assests/constant";
+import usePostComment from "../../hooks/usePostComment";
 
-const PostFooter = ({ username, isProfilePage }) => {
+const PostFooter = ({ post, username, isProfilePage }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(100);
+  const {isCommenting, handlePostComment} = usePostComment()
+  const [comment, setComment] = useState("")
+
   const handleLike = () => {
     if (liked) {
       setLiked(false);
@@ -26,6 +30,12 @@ const PostFooter = ({ username, isProfilePage }) => {
       setLikes(likes + 1);
     }
   };
+
+
+  const handleSubmitComment = async() =>{
+    await handlePostComment(post.id, comment)
+    setComment("")
+  }
   return (
     <>
       <Box mb={10} marginTop={"auto"}>
@@ -65,6 +75,7 @@ const PostFooter = ({ username, isProfilePage }) => {
               variant={"flushed"}
               placeholder={"Add a comment"}
               fontSize={14}
+              onnChange = {(e) => setComment(e.target.value)}
             />
             <InputRightElement>
               <Button
@@ -76,6 +87,8 @@ const PostFooter = ({ username, isProfilePage }) => {
                   color: "white",
                 }}
                 bg={"transparent"}
+                onClick={handleSubmitComment}
+                isLoading={isCommenting}
               >
                 Post
               </Button>

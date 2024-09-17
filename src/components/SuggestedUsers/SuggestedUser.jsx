@@ -1,66 +1,57 @@
-import React from 'react'
-import { VStack } from '@chakra-ui/react'
-import SuggestedHeader from './SuggestedHeader'
-import {Avatar, Box, Button, Flex, Text} from '@chakra-ui/react'
-import { useState } from 'react'
-import useAuthStore from '../../store/authStore'
-import useFollowUser from '../../hooks/useFollowUser'
+import { Avatar, Box, Button, Flex, VStack } from "@chakra-ui/react";
+import useFollowUser from "../../hooks/useFollowUser";
+import useAuthStore from "../../store/authStore";
+import { Link } from "react-router-dom";
 
-const SuggestedUser = ({user, setUser}) => {
-  const {isFollowing, isUpdating, handleFollowers} = useFollowUser(user.id)
-  const authUser  = useAuthStore(state => state.user)
+const SuggestedUser = ({ user, setUser }) => {
+	const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user.uid);
+	const authUser = useAuthStore((state) => state.user);
 
-  const onFollowUser = async() => {
-    await handleFollowers();
-    setUser({...user, followers : isFollowing ? [user.followers((followers) => followers.id !==authUser.uid)] : [...user.followers,authUser]})
-  }
+	const onFollowUser = async () => {
+		await handleFollowUser();
+		setUser({
+			...user,
+			followers: isFollowing
+				? user.followers.filter((follower) => follower.uid !== authUser.uid)
+				: [...user.followers, authUser],
+		});
+	};
 
+	return (
+		<Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
+			<Flex alignItems={"center"} gap={2}>
+				<Link to={`/${user.username}`}>
+					<Avatar src={user.profilePicURL} size={"md"} />
+				</Link>
+				<VStack spacing={2} alignItems={"flex-start"}>
+					<Link to={`/${user.username}`}>
+						<Box fontSize={12} fontWeight={"bold"}>
+							{user.fullName}
+						</Box>
+					</Link>
+					<Box fontSize={11} color={"gray.500"}>
+						{user.followers.length} followers
+					</Box>
+				</VStack>
+			</Flex>
+			{authUser.uid !== user.uid && (
+				<Button
+					fontSize={13}
+					bg={"transparent"}
+					p={0}
+					h={"max-content"}
+					fontWeight={"medium"}
+					color={"blue.400"}
+					cursor={"pointer"}
+					_hover={{ color: "white" }}
+					onClick={onFollowUser}
+					isLoading={isUpdating}
+				>
+					{isFollowing ? "Unfollow" : "Follow"}
+				</Button>
+			)}
+		</Flex>
+	);
+};
 
-
-  return (
-    <>
-    <Flex justifyContent={"space-between"}
-      alignItems={"center"}
-      w={'full'}
-    >
-      <Flex>
-        <Avatar src={user.profilePicURL} size={'sm'} n/>
-        <VStack spacing={2}>
-          <Box fontSize={12} 
-          fontWeight={"bold"}
-          alignItems={'flex-start'}>
-            {user.fullName}
-          </Box>
-        <Box 
-        fontSize = {11}
-        color={'gray.500'}
-        >
-        {user.followers} Followers
-        </Box>
-
-        
-        
-      </VStack>
-    </Flex>
-  
-    {authUser.id !== user.id && 
-      <Button
-      fontSize = {12}
-      bg = {'transparent'}
-      p = {0}
-      h = "max-content"
-      fontWeight = {'medium'}
-      color = {'blue.400'}
-      cursor={'pointer'}
-      _hover={{color:'white' }}
-      onClick={onFollowUser}
-      isLoading = {isUpdating}
-      >
-      {isFollowed ? 'Unfollow' : 'Follow'}
-      </Button>}
-    </Flex>
-    </>
-  )
-}
-
-export default SuggestedUser
+export default SuggestedUser;

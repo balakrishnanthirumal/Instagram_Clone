@@ -1,8 +1,9 @@
 import { useState } from "react";
 import useAuthStore from "../store/authStore"
 import useShowToast from "./useShowToast";
-import { firestore } from "../firebase/firebase";
+import { firestore } from "../firebase/FireBase";
 import { collection, query, where } from "firebase/firestore";
+import { getDocs } from "firebase/firestore";
 
 const useSearchUser = () => {
   
@@ -15,7 +16,7 @@ const useSearchUser = () => {
             const q = query(collection(firestore, "users"), where("username", "==", username))
 
             const querySnapshot = await getDocs(q)
-            if(querySnapshot.empy) return showToast ("Error", "User not found", "error")
+            if(querySnapshot.empty) return showToast ("Error", "User not found", "error")
             console.log(querySnapshot)
 
             querySnapshot.forEach((doc) => {
