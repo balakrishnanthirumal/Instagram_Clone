@@ -6,7 +6,10 @@ const ProfilePosts = () => {
 	const { isLoading, posts } = useGetUserPosts();
 
 	const noPostsFound = !isLoading && posts.length === 0;
-	if (noPostsFound) return <NoPostsFound />;
+	if (noPostsFound) {
+		console.log(posts)
+		return <NoPostsFound />;
+	}
 
 	return (
 		<Grid

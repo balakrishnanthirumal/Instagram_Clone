@@ -1,51 +1,35 @@
-import { Flex, VStack, Box, Text } from '@chakra-ui/react'
-import React from 'react'
-import SuggestedHeader from './SuggestedHeader'
-import SuggestedUser from './SuggestedUser'
-import useSuggestedUsers from '../../hooks/useGetSuggestedUser'
+import { Box, Flex, Link, Text, VStack } from "@chakra-ui/react";
+import SuggestedHeader from "./SuggestedHeader";
+import SuggestedUser from "./SuggestedUser";
+import useGetSuggestedUsers from "../../hooks/useGetSuggestedUser";
 
 const SuggestedUsers = () => {
+	const { isLoading, suggestedUsers } = useGetSuggestedUsers();
 
-  const {isLoading, suggestedUsers} = useSuggestedUsers
-  ()
-  if(isLoading) return null;
-  return (
-    <VStack py={8}
-    px = {6}
-    gap={4}
-    
-    >
-      <SuggestedHeader/>
-      {suggestedUsers.length !== 0 && (
-         <Flex alighItems={"center"}
-         justifyContent={"space-between"}
-         w={"full"}
-         >
-           <Text
-           fontSize={12}
-           fontWeight={"bold"}
-           color={"gray.500"}
-           >
-            Suggestions for you
-           </Text>
-           <Text
-            fontSize = {12}
-            fontWeight = {"bold"}
-            _hover = {{color: 'gray.400'}}
-            cursor = {'pointer'}
-            >  
-            See All
-             
-           </Text>
-         </Flex>
-      )}
-     {suggestedUsers.map((user) =>(
-      <SuggestedUser key = {user.id} user = {user}/>
-     ))}
-     
-    </VStack>
-  )
-}
+	if (isLoading) return null;
 
+	return (
+		<VStack py={8} px={6} gap={4}>
+			<SuggestedHeader />
 
-export default SuggestedUsers
+			{suggestedUsers.length !== 0 && (
+				<Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
+					<Text fontSize={12} fontWeight={"bold"} color={"gray.500"}>
+						Suggested for you
+					</Text>
+					<Text fontSize={12} fontWeight={"bold"} _hover={{ color: "gray.400" }} cursor={"pointer"}>
+						See All
+					</Text>
+				</Flex>
+			)}
+
+			{suggestedUsers.map((user) => (
+				<SuggestedUser user={user} key={user.id} />
+			))}
+
+		
+		</VStack>
+	);
+};
+
+export default SuggestedUsers;

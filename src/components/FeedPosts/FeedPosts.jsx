@@ -1,48 +1,41 @@
-import { useEffect, useState } from "react";
+import { Box, Container, Flex, Skeleton, SkeletonCircle, Text, VStack } from "@chakra-ui/react";
 import FeedPost from "./FeedPost";
-import {
-  Box,
-  Container,
-  Flex,
-  Skeleton,
-  SkeletonCircle,
-  VStack,
-} from "@chakra-ui/react";
-const FeedPosts = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-  return (
-    <Container maxW={"container.sm"} py={10} px={2}>
-      {isLoading &&
-        [0, 1, 2, 3].map((_, idx) => (
-          <VStack key={idx} gap={4} alignItems={"flex-start"} mb={10}>
-            <Flex gap={2}>
-              <SkeletonCircle size={10} />
-              <VStack gap={2} alignItems={"flex-start"}>
-                <Skeleton height={10} w={200} />
-                <Skeleton height={10} w={200} />
-              </VStack>
-            </Flex>
-            <Skeleton w={"full"}>
-              <Box h={"500px"}>Contents Wrapped</Box>
-            </Skeleton>
-          </VStack>
-        ))}
+import useGetFeedPosts from "../../hooks/useGetFeedPost";
 
-      {!isLoading && (
-        <>
-          <FeedPost username="Bala" avatar="/img1.png" img="/img1.png" />
-          <FeedPost username="Dhanush" avatar="/img2.png" img="/img2.png" />
-          <FeedPost username="Monish" avatar="/img3.png" img="/img3.png" />
-          <FeedPost username="Naveen" avatar="/img4.png" img="/img4.png" />
-        </>
-      )}
-    </Container>
-  );
+const FeedPosts = () => {
+	const { isLoading, posts } = useGetFeedPosts();
+
+	return (
+		<Container maxW={"container.sm"} py={10} px={2}>
+			{isLoading &&
+				[0, 1, 2].map((_, idx) => (
+					<VStack key={idx} gap={4} alignItems={"flex-start"} mb={10}>
+						<Flex gap='2'>
+							<SkeletonCircle size='10' />
+							<VStack gap={2} alignItems={"flex-start"}>
+								<Skeleton height='10px' w={"200px"} />
+								<Skeleton height='10px' w={"200px"} />
+							</VStack>
+						</Flex>
+						<Skeleton w={"full"}>
+							<Box h={"400px"}>contents wrapped</Box>
+						</Skeleton>
+					</VStack>
+				))}
+
+			{!isLoading && posts.length > 0 && posts.map((post) => <FeedPost key={post.id} post={post} />)}
+			{!isLoading && posts.length === 0 && (
+				<>
+					<Text fontSize={"md"} color={"red.400"}>
+					
+          Hey there thanks for checking out my project.
+          If u want to follow someone first you need to follow them
+					</Text>
+				
+				</>
+			)}
+		</Container>
+	);
 };
 
 export default FeedPosts;
