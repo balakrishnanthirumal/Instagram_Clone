@@ -1,0 +1,6 @@
+{
+  "client": {
+    "source": "insta-clone",
+    "plugin": "zcatalyst-cli-plugin-react"
+  }
+}
