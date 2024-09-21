@@ -1,6 +1,6 @@
 {
   "client": {
-    "source": "insta-clone",
+    "source": "react-app",
     "plugin": "zcatalyst-cli-plugin-react"
   }
 }
