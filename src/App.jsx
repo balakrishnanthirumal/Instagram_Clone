@@ -11,9 +11,9 @@ function App() {
     <>
       <PafeLayout>
         <Routes>
-          <Route path="/" element={authUser ? <HomePage /> : <Navigate to={"/auth"} />} />
-          <Route path="auth/" element={!authUser ? <AuthPage /> : <Navigate to={"/"} />} />
-          <Route path='/:username' element={<ProfilePage />} />
+          <Route path="/Instagram_Clone/" element={authUser ? <HomePage /> : <Navigate to={"/Instagram_Clone/auth"} />} />
+          <Route path="auth/" element={!authUser ? <AuthPage /> : <Navigate to={"/Instagram_Clone/"} />} />
+          <Route path='/Instagram_Clone/:username' element={<ProfilePage />} />
         </Routes>
 
       </PafeLayout>
