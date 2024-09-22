@@ -1,6 +1,6 @@
 import HomePage from './Pages/HomePage/HomePage'
 import AuthPage from './Pages/AuthPage/AuthPage'
-import './App.css'
+
 import { Navigate, Route, Routes } from 'react-router-dom'
 import PafeLayout from './Layouts/Page Layout/PafeLayout'
 import ProfilePage from './Pages/ProfilePages/ProfilePages'
